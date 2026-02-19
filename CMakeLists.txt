@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(rustc_lexer LANGUAGES CXX)
+project(rustc_compiler LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # --- Main binary ---
 add_executable(rustc
     src/main/main.cpp
+    src/parser/parser.cpp
+    src/ast/ast.cpp
     src/lexer/lexer.cpp
     src/token/token.cpp
 )
@@ -38,3 +40,22 @@ add_executable(lexer_test
 )
 target_link_libraries(lexer_test GTest::gtest_main)
 add_test(NAME LexerTests COMMAND lexer_test)
+
+# --- AST tests ---
+add_executable(ast_test
+    src/ast/ast_test.cc
+    src/ast/ast.cpp
+)
+target_link_libraries(ast_test GTest::gtest_main)
+add_test(NAME AstTests COMMAND ast_test)
+
+# --- Parser tests ---
+add_executable(parser_test
+    src/parser/parser_test.cc
+    src/parser/parser.cpp
+    src/ast/ast.cpp
+    src/lexer/lexer.cpp
+    src/token/token.cpp
+)
+target_link_libraries(parser_test GTest::gtest_main)
+add_test(NAME ParserTests COMMAND parser_test)

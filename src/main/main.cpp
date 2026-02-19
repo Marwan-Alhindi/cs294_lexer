@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "../parser/parser.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -19,15 +19,17 @@ int main(int argc, char* argv[]) {
     buffer << file.rdbuf();
     std::string source = buffer.str();
 
-    Lexer lexer(source);
-    std::vector<Token> tokens = lexer.tokenize();
+    Parser parser(source);
+    auto program = parser.parseProgram();
 
-    for (const auto& tok : tokens) {
-        if (tok.type == TokenType::EOF_TOKEN) {
-            break;
+    if (parser.hasErrors()) {
+        for (const auto& err : parser.errors()) {
+            std::cerr << "Parse error [line " << err.line << "]: " << err.message << std::endl;
         }
-        std::cout << tokenTypeToString(tok.type) << " " << tok.lexeme << std::endl;
+        return 1;
     }
 
+    std::cout << "Parsed successfully: "
+              << program->statements.size() << " top-level statement(s)." << std::endl;
     return 0;
 }

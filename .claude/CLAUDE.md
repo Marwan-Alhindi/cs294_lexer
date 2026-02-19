@@ -1,14 +1,15 @@
-# Rust Lexer (CS294 Assignment 1)
+# Rust Compiler (CS294)
 
-A lexer for basic Rust syntax, written in C++. Takes a Rust source file as input and produces a stream of tokens.
+A compiler for basic Rust syntax, written in C++. Implements the full pipeline:
+Lexer → Parser → (Semantic Analyzer) → (Code Generator).
 
 ## Build & Test
 ```bash
 # Build
 cmake -B build && cmake --build build
 
-# Run tests
-cd build && ctest
+# Run all tests
+cd build && ctest --output-on-failure
 
 # Run on a file
 ./build/rustc input.rs
@@ -35,4 +36,8 @@ cd build && ctest
 ## Modules
 - `src/token/` — Token type enum and Token struct
 - `src/lexer/` — Lexer class that converts source text to tokens
-- `src/main/` — CLI driver that reads a file and prints tokens
+- `src/ast/` — AST node types (output of parser, input to semantic analyzer)
+- `src/parser/` — Recursive descent parser; produces AST from token stream
+- `src/semantic/` — Type checking and name resolution (planned)
+- `src/codegen/` — IR / code emission (planned)
+- `src/main/` — CLI driver
