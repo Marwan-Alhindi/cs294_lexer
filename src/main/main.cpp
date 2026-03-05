@@ -1,4 +1,5 @@
 #include "../parser/parser.h"
+#include "../ast/ast_printer.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -30,6 +31,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "Parsed successfully: "
-              << program->statements.size() << " top-level statement(s)." << std::endl;
+              << program->statements.size() << " top-level statement(s).\n\n";
+    printAst(program.get());
     return 0;
 }

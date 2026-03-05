@@ -9,7 +9,7 @@ add_executable(rustc
     src/main/main.cpp
     src/parser/parser.cpp
     src/ast/ast.cpp
-    src/lexer/lexer.cpp
+    src/ast/ast_printer.cpp    src/lexer/lexer.cpp
     src/token/token.cpp
 )
 
@@ -45,7 +45,7 @@ add_test(NAME LexerTests COMMAND lexer_test)
 add_executable(ast_test
     src/ast/ast_test.cc
     src/ast/ast.cpp
-)
+    src/ast/ast_printer.cpp)
 target_link_libraries(ast_test GTest::gtest_main)
 add_test(NAME AstTests COMMAND ast_test)
 
@@ -54,7 +54,7 @@ add_executable(parser_test
     src/parser/parser_test.cc
     src/parser/parser.cpp
     src/ast/ast.cpp
-    src/lexer/lexer.cpp
+    src/ast/ast_printer.cpp    src/lexer/lexer.cpp
     src/token/token.cpp
 )
 target_link_libraries(parser_test GTest::gtest_main)
